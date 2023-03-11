@@ -1,14 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="indexBody">
 <head>
+    <link rel="stylesheet" href="/static/styless.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Alex's Project</title>
 </head>
 <body>
-    {%for e in data%}
-    <img src="{{e['url'] }}">
-    {% endfor %}
+    <div>
+        <h1>This is Team Edge Project</h1>
+        <div>
+            <form action="/signup">
+                <button type="submit">SIGN UP</button>
+            </form>
+            <form action="/allusers">
+                <button type="submit">Press to see all users</button>
+            </form>
+            <form action="/signin">
+                <button type="submit">SIGN IN</button>
+            </form>
+        </div>
+        <div>
+            <h2>API page</h2>
+            <a href="api" > API link</a>
+        </div>
+    </div>
+    
 </body>
 </html>
