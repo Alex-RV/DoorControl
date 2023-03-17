@@ -15,6 +15,7 @@
                 {% if session['email'] %}
                 <h3>Welcome, {{ session['email'] }}!</h3>
                 <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="profile">Profile</a>
                 {% else %}
                 <form action="/signup">
                     <button class="buttonBlue" type="submit">SIGN UP</button>
@@ -22,7 +23,7 @@
                 <form action="/login">
                     <button class="buttonBlue" type="submit">SIGN IN</button>
                 </form>
-                </div>
+            </div>
                 {% endif %}
                 
                 <form action="/allusers">
@@ -33,10 +34,11 @@
                 <h2>API page</h2>
                 <a href="api" > API link</a>
             </div>
-            <div class="footer">
-                <p class="footer-text">Created by Alex Riabov</p>
-                <a class="footer-link" href="https://github.com/Alex-RV">GitHub</a>
-            </div>
+            
+        </div>
+        <div class="footer">
+            <p class="footer-text">Created by Alex Riabov</p>
+            <a class="footer-link" href="https://github.com/Alex-RV">GitHub</a>
         </div>
 </body>
 </html>
