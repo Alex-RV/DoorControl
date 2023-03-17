@@ -12,15 +12,15 @@
             <h1>Doors control</h1>
             
             <div class="formsDivIndex">
-                {% if session['username'] %}
-                <h3>Welcome, {{ session['username'] }}!</h3>
+                {% if session['email'] %}
+                <h3>Welcome, {{ session['email'] }}!</h3>
                 <a href="{{ url_for('logout') }}">Logout</a>
                 {% else %}
                 <form action="/signup">
-                    <button type="submit">SIGN UP</button>
+                    <button class="buttonBlue" type="submit">SIGN UP</button>
                 </form>
                 <form action="/login">
-                    <button type="submit">SIGN IN</button>
+                    <button class="buttonBlue" type="submit">SIGN IN</button>
                 </form>
                 </div>
                 {% endif %}

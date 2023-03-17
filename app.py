@@ -33,16 +33,16 @@ def get_all_users():
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    session.pop('email', None)
     return redirect(url_for('index'))
 
 @app.route('/profile')
 def profile():
     if 'user_id' in session:
         # Get user info from database using session['user_id']
-        conn = sqlite3.connect('user.db')
+        conn = sqlite3.connect('./static/myapp.db')
         c = conn.cursor()
-        c.execute('SELECT * FROM users WHERE id = ?', (session['user_id'],))
+        c.execute('SELECT * FROM users WHERE email = ?', (session['email'],))
         user = c.fetchone()
         conn.close()
 
@@ -54,13 +54,13 @@ def profile():
 def login():
     if request.method == 'POST':
         # Get user input from form
-        username = request.form['email']
+        email = request.form['email']
         password = request.form['password']
 
         # Get user info from database
         conn = sqlite3.connect('./static/myapp.db')
         c = conn.cursor()
-        c.execute('SELECT * FROM users WHERE email = ?', (username,))
+        c.execute('SELECT * FROM users WHERE email = ?', (email,))
         user = c.fetchone()
         conn.close()
         print("something")
@@ -68,8 +68,9 @@ def login():
         # Check if user exists and password is correct
         if user and password:
             # Store user info in session
-            session['user_id'] = user[0]
-            session['username'] = user[1]
+            print(user)
+            # name, email, password, phone
+            session['email'] = user[1]
             return redirect(url_for('index'))
         else:
             flash('Invalid username or password')

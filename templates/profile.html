@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" class="indexBody">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="/static/styless.css">
+</head>
+<body>
+    <main>
+    <div class="mainDivIndex">
+        <h1>Profile Page</h1>
+        {% if session['email'] %}
+        <div class="profile-info">
+            <div class="user-info">
+                <h2>Name: {{ session['name'] }}</h2>
+                <p>Email:  {{ session['email'] }}</p>
+                <p>Role: Admin</p>
+            </div>
+        </div>
+        <h2>Door Control</h2>
+        <div class="door-control">
+            <h3>Firs Door</h3>
+            <form>
+                <label for="firs-door-status">Status: </label>
+                <br>
+                <label>Access Code:</label>
+                <input type="text" id="front-door-code" name="front-door-code" value="1234" readonly>
+                <br>
+                <button type="button" class="buttonBlue">Unlock</button>
+            </form>
+            <h3>Second Door</h3>
+            <form>
+                <label for="firs-door-status">Status: </label>
+                <br>
+                <label>Access Code:</label>
+                <input type="text" id="back-door-code" name="back-door-code" value="5678" readonly>
+                <br>
+                <button type="button" class="buttonBlue">Unlock</button>
+            </form>
+        </div>
+        {% else %}
+            <form action="/signup">
+                <button class="buttonBlue" type="submit">SIGN UP</button>
+            </form>
+            <form action="/login">
+                <button class="buttonBlue" type="submit">SIGN IN</button>
+            </form>
+            </div>
+        {% endif %}
+    </div>
+    <footer class="footer">
+        <p class="footer-text">Created by Alex Riabov</p>
+        <a class="footer-link" href="https://github.com/Alex-RV">GitHub</a>
+    </footer>
+    </main>
+</body>
+</html>
