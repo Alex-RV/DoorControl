@@ -1,8 +1,10 @@
 import sqlite3
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.secret_key = 'my_key'
 
 def store_user(name, email, phone, pw):
     conn = sqlite3.connect('./static/myapp.db')
@@ -29,18 +31,51 @@ def get_all_users():
     conn.close()  # no commit() when just reading data
     return all_users
 
-def loginUser(email, pw):
-    conn = sqlite3.connect('./static/myapp.db')
-    curs = conn.cursor()
-    print("Login")
-    statement = f"SELECT name from users WHERE email='{email}' AND password = '{pw}';"
-    curs.execute(statement)
-    if not curs.fetchone():  # An empty result evaluates to False.
-        print("Login failed")
-        return False
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+@app.route('/profile')
+def profile():
+    if 'user_id' in session:
+        # Get user info from database using session['user_id']
+        conn = sqlite3.connect('user.db')
+        c = conn.cursor()
+        c.execute('SELECT * FROM users WHERE id = ?', (session['user_id'],))
+        user = c.fetchone()
+        conn.close()
+
+        return render_template('profile.html', user=user)
     else:
-        print("Welcome")
-        return True
+        return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Get user input from form
+        username = request.form['email']
+        password = request.form['password']
+
+        # Get user info from database
+        conn = sqlite3.connect('./static/myapp.db')
+        c = conn.cursor()
+        c.execute('SELECT * FROM users WHERE email = ?', (username,))
+        user = c.fetchone()
+        conn.close()
+        print("something")
+
+        # Check if user exists and password is correct
+        if user and password:
+            # Store user info in session
+            session['user_id'] = user[0]
+            session['username'] = user[1]
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+    else:
+        return render_template('login.html')
 
 @app.route('/')
 def index():
@@ -54,19 +89,6 @@ def allusers():
 def signup():
    return render_template('signup.html') # redirect to a index to log in
 
-@app.route('/signin', )
-def signin():
-   return render_template('signin.html') 
-
-@app.route('/login-user' , methods=['POST'])
-def login_user():
-    email = request.form['email']
-    pw = request.form['password']
-    print("Login")
-    if loginUser(email,pw) == True :
-        return render_template('index.html')
-    else :
-        return render_template('signin.html')
 
 @app.route('/post-user' , methods=['POST'])
 def post_user():

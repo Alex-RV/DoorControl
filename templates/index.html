@@ -8,24 +8,35 @@
     <title>Alex's Project</title>
 </head>
 <body>
-    <div class="mainDivIndex">
-        <h1>This is Team Edge Project</h1>
-        <div>
-            <form action="/signup">
-                <button type="submit">SIGN UP</button>
-            </form>
-            <form action="/allusers">
-                <button type="submit">Press to see all users</button>
-            </form>
-            <form action="/signin">
-                <button type="submit">SIGN IN</button>
-            </form>
+        <div class="mainDivIndex">
+            <h1>Doors control</h1>
+            
+            <div class="formsDivIndex">
+                {% if session['username'] %}
+                <h3>Welcome, {{ session['username'] }}!</h3>
+                <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                <form action="/signup">
+                    <button type="submit">SIGN UP</button>
+                </form>
+                <form action="/login">
+                    <button type="submit">SIGN IN</button>
+                </form>
+                </div>
+                {% endif %}
+                
+                <form action="/allusers">
+                    <button type="submit">Press to see all users</button>
+                </form>
+                
+            <div>
+                <h2>API page</h2>
+                <a href="api" > API link</a>
+            </div>
+            <div class="footer">
+                <p class="footer-text">Created by Alex Riabov</p>
+                <a class="footer-link" href="https://github.com/Alex-RV">GitHub</a>
+            </div>
         </div>
-        <div>
-            <h2>API page</h2>
-            <a href="api" > API link</a>
-        </div>
-    </div>
-    
 </body>
 </html>
