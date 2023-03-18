@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="indexBody">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign UP</title>
+  <link rel="stylesheet" href="/static/styless.css">
+  <meta charset="UTF-8">
+  <title>Sign UP</title>
 </head>
 <body>
-    <h3>Sign up!</h3>
-  <form action="post-user" method="POST">
-    <input type="text" id="name-input" name="name" 
-        placeholder="Your name"> <p></p>
-    <input type="email" id="email-input" name="email" 
-     placeholder="Your email"> <p></p>
-    <input type="tel" id="phone-input" name="phone" 
-         placeholder="Your phone number"><p></p>
-    <input type="text" id="pw-input" name="password" 
-         placeholder="Enter a password"><p></p>
-    <button type="submit">Sign up</button>
-
-  </form>
+  <div class="mainDivIndex">
+    <h1>Sign up!</h1>
+      <div class="formsDivIndex">
+          <form action="post-user" method="POST">
+            <input type="text" id="name-input" name="name" 
+                placeholder="Your name"> <p></p>
+            <input type="email" id="email-input" name="email" 
+             placeholder="Your email"> <p></p>
+            <input type="tel" id="phone-input" name="phone" 
+                 placeholder="Your phone number"><p></p>
+            <input type="text" id="pw-input" name="password" 
+                 placeholder="Enter a password"><p></p>
+            <button class="buttonBlue" type="submit">Sign up</button>
+          </form>
+      </div>
+  </div>
 </body>
 </html>

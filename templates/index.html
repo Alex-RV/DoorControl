@@ -14,8 +14,12 @@
             <div class="formsDivIndex">
                 {% if session['email'] %}
                 <h3>Welcome, {{ session['email'] }}!</h3>
-                <a href="{{ url_for('logout') }}">Logout</a>
-                <a href="profile">Profile</a>
+                <form action="{{ url_for('logout') }}">
+                    <button class="buttonBlue" type="submit">Logout</button>
+                </form>
+                <form action="/profile">
+                    <button class="buttonBlue" type="submit">Profile</button>
+                </form>
                 {% else %}
                 <form action="/signup">
                     <button class="buttonBlue" type="submit">SIGN UP</button>
@@ -27,7 +31,7 @@
                 {% endif %}
                 
                 <form action="/allusers">
-                    <button type="submit">Press to see all users</button>
+                    <button class="buttonBlue" type="submit">Press to see all users</button>
                 </form>
                 
             <div>
@@ -35,10 +39,6 @@
                 <a href="api" > API link</a>
             </div>
             
-        </div>
-        <div class="footer">
-            <p class="footer-text">Created by Alex Riabov</p>
-            <a class="footer-link" href="https://github.com/Alex-RV">GitHub</a>
         </div>
 </body>
 </html>
