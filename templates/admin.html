@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 5px;
+        text-align: left;
+      }
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Admin Panel</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Phone</th>
+          <th>Admin?</th>
+          <th>Door1?</th>
+          <th>Door2?</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+            <form action="/update" method="POST">
+                <input type="hidden" name="id" value="{{ user[1] }}">
+                <td>{{ user[0] }}</td>
+                <td>{{ user[1] }}</td>
+                <td>{{ user[3] }}</td>
+                <td>{{ user[2] }}</td>
+                <td>
+                  <input type="checkbox" name="isAdmin"  {% if user[4] == 1 %}checked value="1" {% else %} value="0" {% endif %}>
+                </td>
+                <td>
+                  <input type="checkbox" name="door1" value="1" {% if user[5] == 1 %}checked value="1" {% else %} value="0" {% endif %}>
+                </td>
+                <td>
+                  <input type="checkbox" name="door2" value="1" {% if user[6] == 1 %}checked value="1" {% else %} value="0" {% endif %}>
+                </td>
+                <td><input type="submit" value="Update"></td>
+              </form>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
