@@ -1,7 +1,6 @@
 import sqlite3
 import requests
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'my_key'
