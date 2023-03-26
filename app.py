@@ -6,6 +6,19 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 app = Flask(__name__)
 app.secret_key = 'my_key'
 
+conn = sqlite3.connect('./static/myapp.db')
+c = conn.cursor()
+# Create table if it doesn't exist
+c.execute('''CREATE TABLE IF NOT EXISTS users
+             (id INTEGER PRIMARY KEY AUTOINCREMENT,
+              name TEXT NOT NULL,
+              email TEXT NOT NULL,
+              phone TEXT, password TEXT NOT NULL,
+              _isAdmin INTEGER DEFAULT 0 NOT NULL,
+              door1 INTEGER DEFAULT 0 NOT NULL,
+              door2 INTEGER DEFAULT 0 NOT NULL )''')
+conn.commit()
+
 def store_user(name, email, phone, pw):
     _isAdmin = 0
     door1 = 0
@@ -98,10 +111,13 @@ def profile():
         conn = sqlite3.connect('./static/myapp.db')
         c = conn.cursor()
         c.execute('SELECT * FROM users WHERE email = ?', (session['email'],))
+        # c.execute('SELECT u.*, d.isOpen, d.lastUser, d.lastOpenTime FROM users u LEFT JOIN doors d ON u.email = d.email WHERE u.email = ?', (session['email'],))
         user = c.fetchone()
+        c.execute('SELECT * FROM doors',)
+        doors = c.fetchone()
         conn.close()
 
-        return render_template('profile.html', user=user)
+        return render_template('profile.html', user=user, doors=doors)
     else:
         return redirect(url_for('login'))
 
