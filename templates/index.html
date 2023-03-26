@@ -9,7 +9,7 @@
 </head>
 <body>
         <div class="mainDivIndex">
-            <h1>Control of something</h1>
+            <h1>Door Control</h1>
             
             <div class="formsDivIndex">
                 {% if session['email'] %}
@@ -17,10 +17,17 @@
                 <form action="{{ url_for('logout') }}">
                     <button class="buttonBlue" type="submit">Logout</button>
                 </form>
+                    {% if session['_isAdmin'] == 1 %}
+                <form action="/admin">
+                    <button class="buttonBlue" type="submit">Admin Panel</button>
+                </form>
+                    {% else %}
+                    {% endif %}
                 <form action="/profile">
                     <button class="buttonBlue" type="submit">Profile</button>
                 </form>
                 {% else %}
+                <h3>Hello, please login first</h3>
                 <form action="/signup">
                     <button class="buttonBlue" type="submit">SIGN UP</button>
                 </form>

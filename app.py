@@ -41,11 +41,12 @@ def get_all_users():
 def changeDoorState(doorId, value):
     conn = sqlite3.connect('./static/myapp.db')
     curs = conn.cursor()
-    curs.execute('UPDATE users SET ${doorId} = ?', (value))
+    curs.execute(f'UPDATE users SET {doorId} = ?', (value))
+    # HERE HARDWARE CODE
     conn.commit()
     conn.close()
 
-    return redirect('/')
+    return (f'DOOR : {doorId} STATE : {value} changed successfully!')
 
 
 
@@ -80,15 +81,19 @@ def update():
 
     return redirect('/')
 
+@app.route('/admin')
+def admin():
+    if session['_isAdmin'] == 1:
+        conn = sqlite3.connect('./static/myapp.db')
+        curs = conn.cursor()
+        curs.execute('SELECT * FROM users')
+        users = curs.fetchall()
+        return render_template('admin.html', users=users)
+    else : return redirect(url_for('profile'))
+
 @app.route('/profile')
 def profile():
     if 'email' in session:
-        if session['_isAdmin'] == 1:
-            conn = sqlite3.connect('./static/myapp.db')
-            curs = conn.cursor()
-            curs.execute('SELECT * FROM users')
-            users = curs.fetchall()
-            return render_template('admin.html', users=users)
         # Get user info from database using session['user_id']
         conn = sqlite3.connect('./static/myapp.db')
         c = conn.cursor()
@@ -121,7 +126,10 @@ def login():
             print(user)
             # name, email, password, phone
             session['email'] = user[1]
+            session['name'] = user[0]
             session['_isAdmin'] = user[4]
+            session['door1'] = user[5]
+            session['door2'] = user[6]
             return redirect(url_for('index'))
         else:
             flash('Invalid username or password')
@@ -152,7 +160,7 @@ def post_user():
     # INSERT INTO users(name, email, phone, password, _isAdmin, door1, door2) VALUES ('Alex Riabov', 'aleksandr.riabov@csedge.org', '+12345678901', 'password', '1', '0', '0');
     store_user(name, email, phone, pw) # a separate function
 
-    return render_template('index.html')
+    return render_template('login.html')
 
 @app.route('/api')
 def api():

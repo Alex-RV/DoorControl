@@ -14,7 +14,7 @@
         {% if session['email'] %}
         <div class="profile-info">
             <div class="user-info">
-                <h2>Name: {{ session['name'] }}</h2>
+                <h3>Hello {{ session['name'] }}</h3>
                 <p>Email:  {{ session['email'] }}</p>
                 <!-- <p>Role: Admin</p> -->
             </div>
@@ -22,6 +22,10 @@
         <h2>Door Control</h2>
         <div class="door-control">
             <h3>Firs Door</h3>
+            {% if session['door1'] == 1 %}
+
+            {% else %}
+            {% endif %}
             <form>
                 <label for="firs-door-status">Status: </label>
                 <br>
