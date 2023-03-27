@@ -20,11 +20,21 @@
         </div>
         <h2>Door Control</h2>
         <div class="door-control">
-            <h3>Firs Door</h3>
-            {% if session['door1'] == 1 %}
+            
+            {% for door in doors %}
+                <h3>Firs Door</h3>
+                {% if session['door1'] == 1 %}
+                    {% if door[1] == 'door1' %}
+                        <p>ID: {{ door[0] }}</p>
+                        <p>Name: {{ door[1] }}</p>
+                        <p>Is Open: {{ door[2] }}</p>
+                    {% endif %}
+                    
 
-            {% else %}
-            {% endif %}
+                {% else %}
+
+                {% endif %}
+            {% endfor %}
             <form>
                 <label for="firs-door-status">Status: </label>
                 <br>

@@ -110,14 +110,16 @@ def profile():
         # Get user info from database using session['user_id']
         conn = sqlite3.connect('./static/myapp.db')
         c = conn.cursor()
-        c.execute('SELECT * FROM users WHERE email = ?', (session['email'],))
+        co = conn.cursor()
+        co.execute('SELECT * FROM users WHERE email = ?', (session['email'],))
         # c.execute('SELECT u.*, d.isOpen, d.lastUser, d.lastOpenTime FROM users u LEFT JOIN doors d ON u.email = d.email WHERE u.email = ?', (session['email'],))
-        user = c.fetchone()
-        c.execute('SELECT * FROM doors',)
-        doors = c.fetchone()
+        user = co.fetchone()
+        c.execute('SELECT * FROM doors;',)
+        doors = c.fetchall()
         conn.close()
+        print(session['door1'])
 
-        return render_template('profile.html', user=user, doors=doors)
+        return render_template('profile.html',  doors=doors)
     else:
         return redirect(url_for('login'))
 
