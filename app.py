@@ -67,6 +67,10 @@ def changeDoorState(doorId, value):
 @app.route('/logout')
 def logout():
     session.pop('email', None)
+    session.pop('name', None)
+    session.pop('_isAdmin', None)
+    session.pop('door1', None)
+    session.pop('door2', None)
     return redirect(url_for('index'))
 
 @app.route('/update', methods=['POST'])
@@ -93,17 +97,20 @@ def update():
     conn.commit()
     conn.close()
 
-    return redirect('/')
+    return redirect('/admin')
 
 @app.route('/admin')
 def admin():
-    if session['_isAdmin'] == 1:
-        conn = sqlite3.connect('./static/myapp.db')
-        curs = conn.cursor()
-        curs.execute('SELECT * FROM users')
-        users = curs.fetchall()
-        return render_template('admin.html', users=users)
-    else : return redirect(url_for('profile'))
+    if '_isAdmin' in session:
+        if session['_isAdmin'] == 1:
+            conn = sqlite3.connect('./static/myapp.db')
+            curs = conn.cursor()
+            curs.execute('SELECT * FROM users')
+            users = curs.fetchall()
+            return render_template('admin.html', users=users)
+        else : 
+            return redirect(url_for('profile'))
+    return redirect(url_for('login'))
 
 @app.route('/profile')
 def profile():
@@ -118,9 +125,9 @@ def profile():
         c.execute('SELECT * FROM doors;',)
         doors = c.fetchall()
         conn.close()
-        print(session['door1'])
+        print(user[4])
 
-        return render_template('profile.html',  doors=doors)
+        return render_template('profile.html', user=user,  doors=doors)
     else:
         return redirect(url_for('login'))
     
@@ -155,8 +162,8 @@ def login():
             session['email'] = user[1]
             session['name'] = user[0]
             session['_isAdmin'] = user[4]
-            session['door1'] = user[5]
-            session['door2'] = user[6]
+            # session['door1'] = user[5]
+            # session['door2'] = user[6]
             return redirect(url_for('index'))
         else:
             flash('Invalid username or password')
@@ -170,7 +177,12 @@ def index():
 
 @app.route('/allusers')
 def allusers():
-    return render_template("allusers.html", data= get_all_users())
+    if '_isAdmin' in session:
+        if session['_isAdmin'] == 1:
+            return render_template("allusers.html", data= get_all_users())
+        else : 
+            return redirect(url_for('profile'))
+    return redirect(url_for('login'))
 
 @app.route('/signup', )
 def signup():
