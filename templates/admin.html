@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en" class="indexBody">
+<head>
+    <link rel="stylesheet" href="/static/styless.css">
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
     <style>
+          .mainBody {
+            display: inline-block;
+            flex: auto;
+            margin: 0 auto;
+            max-width: fit-content;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.751);
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 2rem 2rem 0 2rem;
+        }
       table, th, td {
         border: 1px solid black;
         border-collapse: collapse;
+        background-color: white;
       }
       th, td {
         padding: 5px;
@@ -27,7 +42,7 @@
       }
     </style>
   </head>
-  <body>
+  <body  class="mainBody">
     <h1>Admin Panel</h1>
     <table>
       <thead>

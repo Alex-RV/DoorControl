@@ -21,7 +21,9 @@
                 <form action="/admin">
                     <button class="buttonBlue" type="submit">Admin Panel</button>
                 </form>
-                    {% else %}
+                <form action="/allusers">
+                    <button class="buttonBlue" type="submit">Press to see all users</button>
+                </form>
                     {% endif %}
                 <form action="/profile">
                     <button class="buttonBlue" type="submit">Profile</button>
@@ -36,11 +38,6 @@
                 </form>
             </div>
                 {% endif %}
-                
-                <form action="/allusers">
-                    <button class="buttonBlue" type="submit">Press to see all users</button>
-                </form>
-                
             <div>
                 <h2>API page</h2>
                 <a href="api" > API link</a>

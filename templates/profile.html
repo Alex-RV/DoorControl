@@ -20,49 +20,47 @@
         </div>
         <h2>Door Control</h2>
         <div class="door-control">
-            
             {% for door in doors %}
-                {% if session['door1'] == 1 %}
-                    {% if door[1] == 'door1' %}
-                        <h2>Firs Door</h2>
-                        <form method="POST" action="{{ url_for('change_door_state', door_id='door1') }}">
-                            <label for="door1-status">Status: {{ "Open" if door[2] else "Closed" }} </label>
-                            <br>
-                            <p>Name: {{ door[1] }}</p>
-                            <button type="submit" name="action" value="{{ 'lock' if door[2] else 'unlock' }}" class="buttonBlue">{{ "Lock" if door[2] else "Unlock" }}</button>
-                        </form>
-                    {% endif %}
-                {% else %}
-                    <h2>Firs Door</h2>
-                    <h3>You have not access to this door</h3>
+                {% if session['door1'] == 1 and door[1] == 'door1' %}
+                    <h2>First Door</h2>
+                    <form method="POST" action="{{ url_for('change_door_state', door_id='door1') }}">
+                        <label for="door1-status">Status: {{ "Open" if door[2] else "Closed" }} </label>
+                        <br>
+                        <p>Name: {{ door[1] }}</p>
+                        <button type="submit" name="action" value="{{ 'lock' if door[2] else 'unlock' }}" class="buttonBlue">{{ "Lock" if door[2] else "Unlock" }}</button>
+                    </form>
+                {% elif session['door1'] != 1 and door[1] == 'door1' %}
+                    <h2>First Door</h2>
+                    <h3>You do not have access to this door</h3>
                 {% endif %}
-
-                {% if session['door2'] == 1 %}
-                    {% if door[1] == 'door2' %}
-                        <h2>Second Door</h2>
-                        <form method="POST" action="{{ url_for('change_door_state', door_id='door2') }}">
-                            <label for="door2-status">Status: {{ "Open" if door[2] else "Closed" }} </label>
-                            <br>
-                            <p>Name: {{ door[1] }}</p>
-                            <button type="submit" name="action" value="{{ 'lock' if door[2] else 'unlock' }}" class="buttonBlue">{{ "Lock" if door[2] else "Unlock" }}</button>
-                        </form>
-                    {% endif %}
-                {% else %}
+        
+                {% if session['door2'] == 1 and door[1] == 'door2' %}
                     <h2>Second Door</h2>
-                    <h3>You have not access to this door</h3>
+                    <form method="POST" action="{{ url_for('change_door_state', door_id='door2') }}">
+                        <label for="door2-status">Status: {{ "Open" if door[2] else "Closed" }} </label>
+                        <br>
+                        <p>Name: {{ door[1] }}</p>
+                        <button type="submit" name="action" value="{{ 'lock' if door[2] else 'unlock' }}" class="buttonBlue">{{ "Lock" if door[2] else "Unlock" }}</button>
+                    </form>
+                {% elif session['door2'] != 1 and door[1] == 'door2' %}
+                    <h2>Second Door</h2>
+                    <h3>You do not have access to this door</h3>
                 {% endif %}
-
             {% endfor %}
         </div>
+        
+        {% if session %}
+            <!-- User is logged in -->
         {% else %}
+            <!-- User is not logged in -->
             <form action="/signup">
                 <button class="buttonBlue" type="submit">SIGN UP</button>
             </form>
             <form action="/login">
                 <button class="buttonBlue" type="submit">SIGN IN</button>
             </form>
-            </div>
         {% endif %}
+        {% endif %}        
     </div>
     </main>
 </body>
