@@ -22,36 +22,37 @@
         <div class="door-control">
             
             {% for door in doors %}
-                <h3>Firs Door</h3>
                 {% if session['door1'] == 1 %}
                     {% if door[1] == 'door1' %}
-                        <p>ID: {{ door[0] }}</p>
-                        <p>Name: {{ door[1] }}</p>
-                        <p>Is Open: {{ door[2] }}</p>
+                        <h2>Firs Door</h2>
+                        <form method="POST" action="{{ url_for('change_door_state', door_id='door1') }}">
+                            <label for="door1-status">Status: {{ "Open" if door[2] else "Closed" }} </label>
+                            <br>
+                            <p>Name: {{ door[1] }}</p>
+                            <button type="submit" name="action" value="{{ 'lock' if door[2] else 'unlock' }}" class="buttonBlue">{{ "Lock" if door[2] else "Unlock" }}</button>
+                        </form>
                     {% endif %}
-                    
-
                 {% else %}
-
+                    <h2>Firs Door</h2>
+                    <h3>You have not access to this door</h3>
                 {% endif %}
+
+                {% if session['door2'] == 1 %}
+                    {% if door[1] == 'door2' %}
+                        <h2>Second Door</h2>
+                        <form method="POST" action="{{ url_for('change_door_state', door_id='door2') }}">
+                            <label for="door2-status">Status: {{ "Open" if door[2] else "Closed" }} </label>
+                            <br>
+                            <p>Name: {{ door[1] }}</p>
+                            <button type="submit" name="action" value="{{ 'lock' if door[2] else 'unlock' }}" class="buttonBlue">{{ "Lock" if door[2] else "Unlock" }}</button>
+                        </form>
+                    {% endif %}
+                {% else %}
+                    <h2>Second Door</h2>
+                    <h3>You have not access to this door</h3>
+                {% endif %}
+
             {% endfor %}
-            <form>
-                <label for="firs-door-status">Status: </label>
-                <br>
-                <label>Access Code:</label>
-                <input type="text" id="front-door-code" name="front-door-code" value="1234" readonly>
-                <br>
-                <button type="button" class="buttonBlue">Unlock</button>
-            </form>
-            <h3>Second Door</h3>
-            <form>
-                <label for="firs-door-status">Status: </label>
-                <br>
-                <label>Access Code:</label>
-                <input type="text" id="back-door-code" name="back-door-code" value="5678" readonly>
-                <br>
-                <button type="button" class="buttonBlue">Unlock</button>
-            </form>
         </div>
         {% else %}
             <form action="/signup">
@@ -63,10 +64,6 @@
             </div>
         {% endif %}
     </div>
-    <!-- <div class="footer">
-        <p class="footer-text">Created by Alex Riabov</p>
-        <a class="footer-link" href="https://github.com/Alex-RV">GitHub</a>
-    </div> -->
     </main>
 </body>
 </html>

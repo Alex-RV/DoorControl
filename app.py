@@ -52,9 +52,10 @@ def get_all_users():
     return all_users
 
 def changeDoorState(doorId, value):
+    print("changeDoorState", doorId, value)
     conn = sqlite3.connect('./static/myapp.db')
     curs = conn.cursor()
-    curs.execute(f'UPDATE users SET {doorId} = ?', (value))
+    curs.execute(f"UPDATE doors SET isOpen = ? WHERE name = ?", (value, doorId))
     # HERE HARDWARE CODE
     conn.commit()
     conn.close()
@@ -122,6 +123,14 @@ def profile():
         return render_template('profile.html',  doors=doors)
     else:
         return redirect(url_for('login'))
+    
+@app.route('/change-door-state/<door_id>', methods=['POST'])
+def change_door_state(door_id):
+    action = request.form['action']
+    value = 1 if action == 'unlock' else 0
+    changeDoorState(door_id, value)
+    return redirect(url_for('profile'))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
