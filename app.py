@@ -2,9 +2,20 @@ import os
 import sqlite3
 import requests
 from flask import Flask, render_template, request, session, redirect, url_for, flash
+import RPi.GPIO as GPIO
+from gpiozero import Servo
+
+servo = Servo(25)
 
 app = Flask(__name__)
 app.secret_key = 'my_key'
+
+servoPIN = 4
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(servoPIN, GPIO.OUT)
+pwm=GPIO.PWM(servoPIN, 50)
+pwm.start(2.5)
+
 
 conn = sqlite3.connect('./static/myapp.db')
 c = conn.cursor()
@@ -57,6 +68,9 @@ def changeDoorState(doorId, value):
     curs = conn.cursor()
     curs.execute(f"UPDATE doors SET isOpen = ? WHERE name = ?", (value, doorId))
     # HERE HARDWARE CODE
+    GPIO.output(4, True)
+    pwm.ChangeDutyCycle(90)
+    servo.max()
     conn.commit()
     conn.close()
 
