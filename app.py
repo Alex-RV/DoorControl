@@ -1,20 +1,34 @@
 import os
 import sqlite3
+import time
 import requests
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import RPi.GPIO as GPIO
 from gpiozero import Servo
+
+# sudo apt-get install python3-rpi.gpio
+# sudo pip3 install gpiozero
+
 
 servo = Servo(25)
 
 app = Flask(__name__)
 app.secret_key = 'my_key'
 
+GPIO.setmode(GPIO.BOARD)
+
 servoPIN = 4
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(servoPIN, GPIO.OUT)
-pwm=GPIO.PWM(servoPIN, 50)
-pwm.start(2.5)
+GPIO.setup(servoPIN,GPIO.OUT)
+servo = GPIO.PWM(servoPIN,50)
+print ("Rotating at intervals of 12 degrees")
+duty = 2
+while duty <= 17:
+    servo.ChangeDutyCycle(duty)
+    time.sleep(1)
+    duty = duty + 1
+
+# pwm=GPIO.PWM(servoPIN, 50)
+# pwm.start(2.5)
 
 
 conn = sqlite3.connect('./static/myapp.db')
@@ -139,7 +153,7 @@ def profile():
         c.execute('SELECT * FROM doors;',)
         doors = c.fetchall()
         conn.close()
-        print(user[4])
+        print(user)
 
         return render_template('profile.html', user=user,  doors=doors)
     else:
