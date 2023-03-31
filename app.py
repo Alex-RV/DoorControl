@@ -72,7 +72,7 @@ def changeDoorState(doorId, value):
             sleep(1)
             print("Door1 closed")
     elif doorId == 'door2':
-        servo = Servo(14)
+        servo = Servo(2)
         if value == 1:
             servo.max()
             sleep(1)

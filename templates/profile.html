@@ -9,8 +9,9 @@
 </head>
 <body>
     <main>
-    <div class="mainDivIndex">
+    <div class="mainDivIndex ">
         <h1>Profile Page</h1>
+        <a href="/">Home</a>
         {% if session['email'] %}
         <div class="profile-info">
             <div class="user-info">
@@ -22,7 +23,7 @@
         {% if session %}
         <div class="door-control">
             {% for door in doors %}
-                {% if user[4] == 1 and door[1] == 'door1' %}
+                {% if user[5] == 1 and door[1] == 'door1' %}
                     <h2>First Door</h2>
                     <form method="POST" action="{{ url_for('change_door_state', door_id='door1') }}">
                         <label for="door1-status">Status: {{ "Open" if door[2] else "Closed" }} </label>
@@ -30,12 +31,12 @@
                         <p>Name: {{ door[1] }}</p>
                         <button type="submit" name="action" value="{{ 'lock' if door[2] else 'unlock' }}" class="buttonBlue">{{ "Lock" if door[2] else "Unlock" }}</button>
                     </form>
-                {% elif user[4] != 1 and door[1] == 'door1' %}
+                {% elif user[5] != 1 and door[1] == 'door1' %}
                     <h2>First Door</h2>
                     <h3>You do not have access to this door</h3>
                 {% endif %}
         
-                {% if user[5] == 1 and door[1] == 'door2' %}
+                {% if user[6] == 1 and door[1] == 'door2' %}
                     <h2>Second Door</h2>
                     <form method="POST" action="{{ url_for('change_door_state', door_id='door2') }}">
                         <label for="door2-status">Status: {{ "Open" if door[2] else "Closed" }} </label>
@@ -43,7 +44,7 @@
                         <p>Name: {{ door[1] }}</p>
                         <button type="submit" name="action" value="{{ 'lock' if door[2] else 'unlock' }}" class="buttonBlue">{{ "Lock" if door[2] else "Unlock" }}</button>
                     </form>
-                {% elif user[5] != 1 and door[1] == 'door2' %}
+                {% elif user[6] != 1 and door[1] == 'door2' %}
                     <h2>Second Door</h2>
                     <h3>You do not have access to this door</h3>
                 {% endif %}
