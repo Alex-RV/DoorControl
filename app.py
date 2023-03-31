@@ -3,33 +3,12 @@ import sqlite3
 import time
 import requests
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-import RPi.GPIO as GPIO
 from gpiozero import Servo
+from time import sleep
 
-# sudo apt-get install python3-rpi.gpio
-# sudo pip3 install gpiozero
-
-
-servo = Servo(25)
 
 app = Flask(__name__)
 app.secret_key = 'my_key'
-
-GPIO.setmode(GPIO.BOARD)
-
-servoPIN = 4
-GPIO.setup(servoPIN,GPIO.OUT)
-servo = GPIO.PWM(servoPIN,50)
-print ("Rotating at intervals of 12 degrees")
-duty = 2
-while duty <= 17:
-    servo.ChangeDutyCycle(duty)
-    time.sleep(1)
-    duty = duty + 1
-
-# pwm=GPIO.PWM(servoPIN, 50)
-# pwm.start(2.5)
-
 
 conn = sqlite3.connect('./static/myapp.db')
 c = conn.cursor()
@@ -82,9 +61,31 @@ def changeDoorState(doorId, value):
     curs = conn.cursor()
     curs.execute(f"UPDATE doors SET isOpen = ? WHERE name = ?", (value, doorId))
     # HERE HARDWARE CODE
-    GPIO.output(4, True)
-    pwm.ChangeDutyCycle(90)
-    servo.max()
+    if doorId == 'door1':
+        servo = Servo(4)
+        if value == 1:
+            servo.max()
+            sleep(1)
+            print("Door1 opened")
+        elif value == 0:
+            servo.min()
+            sleep(1)
+            print("Door1 closed")
+    elif doorId == 'door2':
+        servo = Servo(14)
+        if value == 1:
+            servo.max()
+            sleep(1)
+            print("Door2 opened")
+        elif value == 0:
+            servo.min()
+            sleep(1)
+            print("Door2 closed")
+    else:
+        return("Error")
+    
+    servo.close()
+
     conn.commit()
     conn.close()
 
