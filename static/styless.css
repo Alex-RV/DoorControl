@@ -5,6 +5,7 @@
 html {
     height: 100%;
     background-image: url('https://source.unsplash.com/1600x900/?sanfrancisco');
+    /* background-image: url('/static/images/sf.jpg'); */
     background-size: cover;
     background-repeat: no-repeat;
     opacity: 0.9;

@@ -49,7 +49,7 @@
         <tr>
           <th>Name</th>
           <th>Email</th>
-          <th>Password</th>
+          <!-- <th>Password</th> -->
           <th>Phone</th>
           <th>Admin?</th>
           <th>Door1?</th>
@@ -64,7 +64,7 @@
                 <input type="hidden" name="id" value="{{ user[1] }}">
                 <td>{{ user[0] }}</td>
                 <td>{{ user[1] }}</td>
-                <td>{{ user[3] }}</td>
+                <!-- <td>{{ user[3] }}</td> -->
                 <td>{{ user[2] }}</td>
                 <td>
                   <input type="checkbox" name="isAdmin"  {% if user[4] == 1 %}checked value="1" {% else %} value="0" {% endif %}>
