@@ -3,7 +3,7 @@ import sqlite3
 import time
 import requests
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from gpiozero import Servo
+# from gpiozero import Servo
 from time import sleep
 
 
@@ -62,29 +62,29 @@ def changeDoorState(doorId, value):
     curs.execute(f"UPDATE doors SET isOpen = ? WHERE name = ?", (value, doorId))
     # HERE HARDWARE CODE
     if doorId == 'door1':
-        servo = Servo(4)
+        # servo = Servo(4)
         if value == 1:
-            servo.max()
+            # servo.max()
             sleep(1)
             print("Door1 opened")
         elif value == 0:
-            servo.min()
+            # servo.min()
             sleep(1)
             print("Door1 closed")
     elif doorId == 'door2':
-        servo = Servo(2)
+        # servo = Servo(2)
         if value == 1:
-            servo.max()
+            # servo.max()
             sleep(1)
             print("Door2 opened")
         elif value == 0:
-            servo.min()
+            # servo.min()
             sleep(1)
             print("Door2 closed")
     else:
         return("Error")
     
-    servo.close()
+    # servo.close()
 
     conn.commit()
     conn.close()
